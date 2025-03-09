@@ -45,3 +45,57 @@ public class Program
     }
 }
 
+public class DoorMachine
+{
+    public enum State { Terkunci, Terbuka }
+
+    private State currentState;
+
+    public DoorMachine()
+    {
+        currentState = State.Terkunci;
+        Console.WriteLine("Pintu terkunci");
+    }
+
+    public void HandleCommand(string command)
+    {
+        switch (currentState)
+        {
+            case State.Terkunci:
+                if (command == "BukaPintu")
+                {
+                    currentState = State.Terbuka;
+                    Console.WriteLine("Pintu tidak terkunci");
+                }
+                break;
+
+            case State.Terbuka:
+                if (command == "KunciPintu")
+                {
+                    currentState = State.Terkunci;
+                    Console.WriteLine("Pintu terkunci");
+                }
+                break;
+        }
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        DoorMachine pintu = new DoorMachine();
+
+        while (true)
+        {
+            Console.Write("Enter Command: ");
+            string command = Console.ReadLine();
+
+            if (command == "QUIT") break;
+
+            pintu.HandleCommand(command);
+        }
+
+        Console.WriteLine("Program selesai.");
+    }
+}
